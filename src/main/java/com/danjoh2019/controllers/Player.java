@@ -18,7 +18,7 @@ public class Player {
             this.tries += tries;
         }
         else {
-            this.tries = 0;
+            this.tries = 1;
         }
     }
 

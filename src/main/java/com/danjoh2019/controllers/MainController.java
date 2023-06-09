@@ -7,6 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import javafx.application.ConditionalFeature;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.ColorInput;
@@ -47,6 +48,9 @@ public class MainController {
 
     @FXML
     private HBox hBox;
+
+    @FXML
+    private Button rollButton;
 
     @FXML
     private Label playerName;
@@ -97,6 +101,9 @@ public class MainController {
     private Label yahtzee;
 
     @FXML
+    private Label numberOfTries;
+
+    @FXML
     private Label grand;
 
     Die dieNumber1 = new Die();
@@ -129,15 +136,17 @@ public class MainController {
             if (player.getTries() < 3) {
                 if (!die.isSelected()) {
                     getRandomDie(die);
-                    System.out.println(player.getTries());
                 }
             } else {
                 getRandomDie(die);
                 score.setDisable(true);
                 clearDieEffects();
+                rollButton.setVisible(false);
             }
         }
         player.setTries(1);
+
+        numberOfTries.setText("Number of tries: " + player.getTries());
 
         die1.setImage(dieNumber1.getImage());
         die2.setImage(dieNumber2.getImage());
@@ -145,14 +154,9 @@ public class MainController {
         die4.setImage(dieNumber4.getImage());
         die5.setImage(dieNumber5.getImage());
 
-        int scoreTotal = 0;
-        for (Die die : dies) {
-            scoreTotal += die.getValue();
-        }
-
         playerName.setText(player.getName());
 
-        score.setText(Integer.toString(scoreTotal));
+        score.setText(ScoreBoard.chance(dies));
         aces.setText(ScoreBoard.sumSingleNumberDies(1, dies));
         twos.setText(ScoreBoard.sumSingleNumberDies(2, dies));
         threes.setText(ScoreBoard.sumSingleNumberDies(3, dies));
@@ -162,6 +166,15 @@ public class MainController {
 
         total.setText(ScoreBoard.calculateTotal(aces, twos, threes, fours, fives, sixes));
         bonus.setText(ScoreBoard.bonus(total.getText()));
+
+        threeOfAKind.setText(ScoreBoard.xOfAKind(3, dies));
+        fourOfAKind.setText(ScoreBoard.xOfAKind(4, dies));
+
+
+        chance.setText(ScoreBoard.chance(dies));
+        yahtzee.setText(ScoreBoard.xOfAKind(5, dies));
+
+        grand.setText(ScoreBoard.grand(aces, twos, threes, fours, fives, sixes, total, bonus, threeOfAKind, fourOfAKind, fullHouse, small, large, chance, yahtzee));
     }
 
     private void getRandomDie(Die die) {

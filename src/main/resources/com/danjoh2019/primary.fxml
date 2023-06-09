@@ -53,15 +53,20 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </HBox>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#refreshClick" text="ROLL" textAlignment="CENTER" />
-            <Label fx:id="score">
-               <VBox.margin>
-                  <Insets left="400.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Label>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="40.0">
+               <children>
+                  <Button fx:id="rollButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#refreshClick" text="ROLL" textAlignment="CENTER" />
+                  <Label fx:id="score">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="numberOfTries" text="Label" />
+               </children>
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </HBox>
             <GridPane>
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
