@@ -6,8 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class ScoreBoard {
@@ -111,4 +109,38 @@ public class ScoreBoard {
 
         return Integer.toString(sum);
     }
+
+    public static String fullHouse(List<Die> dies) {
+        Map<Integer, Integer> countMap = new HashMap<>();
+        int sum = 0;
+
+        for (Die die : dies) {
+            countMap.put(die.getValue(), countMap.getOrDefault(die.getValue(), 0) + 1);
+            sum += die.getValue();
+        }
+
+        boolean hasThreeOfAKind = false;
+        boolean hasTwoOfAKind = false;
+
+        for (int count : countMap.values()) {
+            if (count == 3) {
+                hasThreeOfAKind = true;
+            } else if (count == 2) {
+                hasTwoOfAKind = true;
+            }
+        }
+
+        if (hasThreeOfAKind && hasTwoOfAKind) {
+            return Integer.toString(sum);
+        }
+
+        return Integer.toString(0);
+    }
+
+    // private boolean checkSize(List<Die> dies) {
+    //     if (dies.size() != 5) {
+    //         return false;
+    //     }
+    //     return true;
+    // }
 }

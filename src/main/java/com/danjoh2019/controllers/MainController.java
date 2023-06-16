@@ -141,7 +141,7 @@ public class MainController {
                 getRandomDie(die);
                 score.setDisable(true);
                 clearDieEffects();
-                rollButton.setVisible(false);
+                // rollButton.setDisable(true);
             }
         }
         player.setTries(1);
@@ -170,6 +170,7 @@ public class MainController {
         threeOfAKind.setText(ScoreBoard.xOfAKind(3, dies));
         fourOfAKind.setText(ScoreBoard.xOfAKind(4, dies));
 
+        fullHouse.setText(ScoreBoard.fullHouse(dies));
 
         chance.setText(ScoreBoard.chance(dies));
         yahtzee.setText(ScoreBoard.xOfAKind(5, dies));
