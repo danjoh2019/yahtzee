@@ -172,6 +172,9 @@ public class MainController {
 
         fullHouse.setText(ScoreBoard.fullHouse(dies));
 
+        small.setText(ScoreBoard.smallStraight(dies));
+        large.setText(ScoreBoard.largeStraight(dies));
+
         chance.setText(ScoreBoard.chance(dies));
         yahtzee.setText(ScoreBoard.xOfAKind(5, dies));
 
@@ -179,7 +182,7 @@ public class MainController {
     }
 
     private void getRandomDie(Die die) {
-        int randomDie = ThreadLocalRandom.current().nextInt(1, 6);
+        int randomDie = ThreadLocalRandom.current().nextInt(1, 7);
         die.setImage(new Image(getClass().getResourceAsStream("gfx/die" + randomDie + ".png"), 64, 64, true, true));
         die.setValue(randomDie);
     }

@@ -1,11 +1,15 @@
 package com.danjoh2019.controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+
 import javafx.scene.control.Label;
 
 public class ScoreBoard {
@@ -136,11 +140,38 @@ public class ScoreBoard {
 
         return Integer.toString(0);
     }
+    public static String smallStraight(List<Die> dice) {
+        Set<Integer> uniqueDice = new HashSet<>();
+
+        for (Die die : dice) {
+            uniqueDice.add(die.getValue());
+        }
+
+        if (uniqueDice.containsAll(Arrays.asList(1, 2, 3, 4, 5))) {
+            return Integer.toString(15);
+        }
+
+        return Integer.toString(0);
+    }
+
+    public static String largeStraight(List<Die> dice) {
+        Set<Integer> uniqueDice = new HashSet<>();
+
+        for (Die die : dice) {
+            uniqueDice.add(die.getValue());
+        }
+
+        if (uniqueDice.containsAll(Arrays.asList(2, 3, 4, 5, 6))) {
+            return Integer.toString(20);
+        }
+
+        return Integer.toString(0);
+    }
 
     // private boolean checkSize(List<Die> dies) {
-    //     if (dies.size() != 5) {
-    //         return false;
-    //     }
-    //     return true;
+    // if (dies.size() != 5) {
+    // return false;
+    // }
+    // return true;
     // }
 }
