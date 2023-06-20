@@ -12,7 +12,9 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 public class MainController {
     private Player player;
@@ -36,7 +38,13 @@ public class MainController {
     private Label score;
 
     @FXML
+    private Label labelTitle;
+
+    @FXML
     private HBox hBox;
+
+    @FXML
+    private GridPane gridPane;
 
     @FXML
     private Button rollButton;
@@ -95,13 +103,14 @@ public class MainController {
     @FXML
     private Label grand;
 
-    Die dieNumber1 = new Die();
-    Die dieNumber2 = new Die();
-    Die dieNumber3 = new Die();
-    Die dieNumber4 = new Die();
-    Die dieNumber5 = new Die();
+    private Die dieNumber1 = new Die();
+    private Die dieNumber2 = new Die();
+    private Die dieNumber3 = new Die();
+    private Die dieNumber4 = new Die();
+    private Die dieNumber5 = new Die();
 
-    List<Die> dies = new ArrayList<>();
+    private List<Die> dice = new ArrayList<>();
+    private List<Label> scoreLabels = new ArrayList<>();
 
     public MainController() {
         player = new Player();
@@ -112,28 +121,34 @@ public class MainController {
         getRandomDie(dieNumber4);
         getRandomDie(dieNumber5);
 
-        dies.add(dieNumber1);
-        dies.add(dieNumber2);
-        dies.add(dieNumber3);
-        dies.add(dieNumber4);
-        dies.add(dieNumber5);
+        dice.add(dieNumber1);
+        dice.add(dieNumber2);
+        dice.add(dieNumber3);
+        dice.add(dieNumber4);
+        dice.add(dieNumber5);
+
+        for (int i = 0; i < 16; i++) {
+            scoreLabels.add(new Label());
+        }
     }
 
     @FXML
     private void refreshClick(ActionEvent actionEvent) {
-        for (Die die : dies) {
-            if (player.getTries() < 3) {
+        if (!player.isSaved() && player.getTries() < 3) {
+            for (Die die : dice) {
                 if (!die.isSelected()) {
                     getRandomDie(die);
                 }
-            } else {
-                getRandomDie(die);
-                score.setDisable(true);
-                clearDieEffects();
-                // rollButton.setDisable(true);
+                // rollButton.setDisable(false);
             }
+            player.setTries(1);
         }
-        player.setTries(1);
+
+        if (!player.isSaved() && player.getTries() == 3) {
+            rollButton.setDisable(true);
+        }
+
+        // if (player.isSaved())
 
         numberOfTries.setText("Number of tries: " + player.getTries());
 
@@ -143,31 +158,35 @@ public class MainController {
         die4.setImage(dieNumber4.getImage());
         die5.setImage(dieNumber5.getImage());
 
+        score.setText(Integer.toString(player.getScore()));
+
         playerName.setText(player.getName());
+        updateScores();
+    }
 
-        score.setText(ScoreBoard.chance(dies));
-        aces.setText(ScoreBoard.sumSingleNumberDies(1, dies));
-        twos.setText(ScoreBoard.sumSingleNumberDies(2, dies));
-        threes.setText(ScoreBoard.sumSingleNumberDies(3, dies));
-        fours.setText(ScoreBoard.sumSingleNumberDies(4, dies));
-        fives.setText(ScoreBoard.sumSingleNumberDies(5, dies));
-        sixes.setText(ScoreBoard.sumSingleNumberDies(6, dies));
+    private void updateScores() {
+        aces.setText(ScoreBoard.updateScores(player.getScoreMap(), 1, dice));
+        twos.setText(ScoreBoard.updateScores(player.getScoreMap(), 2, dice));
+        threes.setText(ScoreBoard.updateScores(player.getScoreMap(), 3, dice));
+        fours.setText(ScoreBoard.updateScores(player.getScoreMap(), 4, dice));
+        fives.setText(ScoreBoard.updateScores(player.getScoreMap(), 5, dice));
+        sixes.setText(ScoreBoard.updateScores(player.getScoreMap(), 6, dice));
 
-        total.setText(ScoreBoard.calculateTotal(aces, twos, threes, fours, fives, sixes));
-        bonus.setText(ScoreBoard.bonus(total.getText()));
+        total.setText(ScoreBoard.updateScores(player.getScoreMap(), 7, dice));
+        bonus.setText(ScoreBoard.updateScores(player.getScoreMap(), 8, dice));
 
-        threeOfAKind.setText(ScoreBoard.xOfAKind(3, dies));
-        fourOfAKind.setText(ScoreBoard.xOfAKind(4, dies));
+        threeOfAKind.setText(ScoreBoard.updateScores(player.getScoreMap(), 9, dice));
+        fourOfAKind.setText(ScoreBoard.updateScores(player.getScoreMap(), 10, dice));
 
-        fullHouse.setText(ScoreBoard.fullHouse(dies));
+        fullHouse.setText(ScoreBoard.updateScores(player.getScoreMap(), 11, dice));
 
-        small.setText(ScoreBoard.smallStraight(dies));
-        large.setText(ScoreBoard.largeStraight(dies));
+        small.setText(ScoreBoard.updateScores(player.getScoreMap(), 12, dice));
+        large.setText(ScoreBoard.updateScores(player.getScoreMap(), 13, dice));
 
-        chance.setText(ScoreBoard.chance(dies));
-        yahtzee.setText(ScoreBoard.xOfAKind(5, dies));
+        chance.setText(ScoreBoard.updateScores(player.getScoreMap(), 14, dice));
+        yahtzee.setText(ScoreBoard.updateScores(player.getScoreMap(), 15, dice));
 
-        grand.setText(ScoreBoard.grand(aces, twos, threes, fours, fives, sixes, total, bonus, threeOfAKind, fourOfAKind, fullHouse, small, large, chance, yahtzee));
+        grand.setText(ScoreBoard.updateScores(player.getScoreMap(), 16, dice));
     }
 
     private void getRandomDie(Die die) {
@@ -184,7 +203,7 @@ public class MainController {
             ImageView image = (ImageView) source;
             int position = getPosition(image);
 
-            Die shadowDie = dies.get(position);
+            Die shadowDie = dice.get(position);
 
             if (shadowDie.isSelected()) {
                 image.setEffect(null);
@@ -197,8 +216,39 @@ public class MainController {
         }
     }
 
+    @FXML
+    private void scoreClicked(MouseEvent mouseEvent) {
+        // which control did we click on? it is called the source.
+        Object source = mouseEvent.getSource();
+        if (source instanceof Label) {
+            Label label = (Label) source;
+
+            int position = getLabelPosition(label);
+
+            Label score = scoreLabels.get(position);
+
+            if (!player.alreadySaved(position)) {
+                System.out.println(label.getText());
+                player.save(position, Integer.parseInt(label.getText()));
+                // label.setEffect(null);
+                label.setTextFill(Color.HOTPINK);
+                System.out.println(label.getText());
+                System.out.println(label.getId());
+                rollButton.setDisable(false);
+                clearDieEffects();
+                player.toggleSave();
+                player.setTries(3);
+            } else {
+                // label.setEffect(new ColorAdjust(0, 0.4, 0, 0));
+                // image.setEffect(new DropShadow());
+                // label.setTextFill(Color.WHITE);
+                System.out.println("already saved");
+            }
+        }
+    }
+
     private void clearDieEffects() {
-        for (Die die : dies) {
+        for (Die die : dice) {
             die.setSelected(false);
         }
 
@@ -221,6 +271,25 @@ public class MainController {
             }
             count++;
         }
+        return count;
+    }
+
+    /**
+     * Get the position within the GridPane for the given Label.
+     * First score label will be 1, last will be 16.
+     */
+    private int getLabelPosition(Label label) {
+        int count = 0;
+
+        for (var child : gridPane.getChildrenUnmodifiable()) {
+            if (!child.getId().equals("labelTitle")) {
+                if (child == label) {
+                    break;
+                }
+                count++;
+            }
+        }
+
         return count;
     }
 }
