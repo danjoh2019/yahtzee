@@ -4,15 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 public class MainController {
     private Player player;
@@ -36,7 +40,13 @@ public class MainController {
     private Label score;
 
     @FXML
+    private Label labelTitle;
+
+    @FXML
     private HBox hBox;
+
+    @FXML
+    private GridPane gridPane;
 
     @FXML
     private Button rollButton;
@@ -95,13 +105,14 @@ public class MainController {
     @FXML
     private Label grand;
 
-    Die dieNumber1 = new Die();
-    Die dieNumber2 = new Die();
-    Die dieNumber3 = new Die();
-    Die dieNumber4 = new Die();
-    Die dieNumber5 = new Die();
+    private Die dieNumber1 = new Die();
+    private Die dieNumber2 = new Die();
+    private Die dieNumber3 = new Die();
+    private Die dieNumber4 = new Die();
+    private Die dieNumber5 = new Die();
 
-    List<Die> dies = new ArrayList<>();
+    private List<Die> dies = new ArrayList<>();
+    private List<Label> scoreLabels = new ArrayList<>();
 
     public MainController() {
         player = new Player();
@@ -117,23 +128,29 @@ public class MainController {
         dies.add(dieNumber3);
         dies.add(dieNumber4);
         dies.add(dieNumber5);
+
+        for (int i = 0; i < 16; i++) {
+            scoreLabels.add(new Label());
+        }
     }
 
     @FXML
     private void refreshClick(ActionEvent actionEvent) {
-        for (Die die : dies) {
-            if (player.getTries() < 3) {
-                if (!die.isSelected()) {
+        if (!player.isSaved()) {
+            for (Die die : dies) {
+                if (player.getTries() < 3) {
+                    if (!die.isSelected()) {
+                        getRandomDie(die);
+                    }
+                } else {
                     getRandomDie(die);
+                    score.setDisable(true);
+                    clearDieEffects();
+                    rollButton.setDisable(true);
                 }
-            } else {
-                getRandomDie(die);
-                score.setDisable(true);
-                clearDieEffects();
-                // rollButton.setDisable(true);
             }
+            player.setTries(1);
         }
-        player.setTries(1);
 
         numberOfTries.setText("Number of tries: " + player.getTries());
 
@@ -145,7 +162,11 @@ public class MainController {
 
         playerName.setText(player.getName());
 
-        score.setText(ScoreBoard.chance(dies));
+        score.setText(Integer.toString(player.getScore()));
+        updateScores();
+    }
+
+    private void updateScores() {
         aces.setText(ScoreBoard.sumSingleNumberDies(1, dies));
         twos.setText(ScoreBoard.sumSingleNumberDies(2, dies));
         threes.setText(ScoreBoard.sumSingleNumberDies(3, dies));
@@ -167,7 +188,8 @@ public class MainController {
         chance.setText(ScoreBoard.chance(dies));
         yahtzee.setText(ScoreBoard.xOfAKind(5, dies));
 
-        grand.setText(ScoreBoard.grand(aces, twos, threes, fours, fives, sixes, total, bonus, threeOfAKind, fourOfAKind, fullHouse, small, large, chance, yahtzee));
+        grand.setText(ScoreBoard.grand(aces, twos, threes, fours, fives, sixes, total, bonus, threeOfAKind, fourOfAKind,
+                fullHouse, small, large, chance, yahtzee));
     }
 
     private void getRandomDie(Die die) {
@@ -197,6 +219,33 @@ public class MainController {
         }
     }
 
+    @FXML
+    private void scoreClicked(MouseEvent mouseEvent) {
+        // which control did we click on? it is called the source.
+        Object source = mouseEvent.getSource();
+        if (source instanceof Label) {
+            Label label = (Label) source;
+
+            int position = getLabelPosition(label) - 1;
+
+            Label score = scoreLabels.get(position);
+
+            if (!player.isSaved()) {
+                System.out.println(label.getText());
+                player.save(Integer.parseInt(label.getText()));
+                // label.setEffect(null);
+                label.setTextFill(Color.HOTPINK);
+                System.out.println(label.getText());
+                System.out.println(label.getId());
+            } else {
+                // label.setEffect(new ColorAdjust(0, 0.4, 0, 0));
+                // image.setEffect(new DropShadow());
+                // label.setTextFill(Color.WHITE);
+                System.out.println("already saved");
+            }
+        }
+    }
+
     private void clearDieEffects() {
         for (Die die : dies) {
             die.setSelected(false);
@@ -221,6 +270,25 @@ public class MainController {
             }
             count++;
         }
+        return count;
+    }
+
+    /**
+     * Get the position within the GridPane for the given Label.
+     * First score label will be 1, last will be 16.
+     */
+    private int getLabelPosition(Label label) {
+        int count = 0;
+
+        for (var child : gridPane.getChildrenUnmodifiable()) {
+            if (!child.getId().equals("labelTitle")) {
+                if (child == label) {
+                    break;
+                }
+                count++;
+            }
+        }
+
         return count;
     }
 }

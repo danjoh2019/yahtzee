@@ -2,10 +2,14 @@ package com.danjoh2019.controllers;
 
 public class Player {
     private String name;
+    private int score;
+    
+    private boolean save = false;
     private int tries;
 
     public Player() {
         this.name = "player";
+        this.score = 0;
         this.tries = 0;
     }
 
@@ -28,5 +32,18 @@ public class Player {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void save(int score) {
+        this.score += score;
+        save = true;
+    }
+
+    public boolean isSaved() {
+        return save;
+    }
+
+    public int getScore() {
+        return score;
     }
 }
