@@ -11,9 +11,9 @@ import java.util.Set;
 
 public class ScoreBoard {
 
-    private static String sumSingleNumberDies(int number, List<Die> dies) {
+    private static String sumSingleNumberDice(int number, List<Die> dice) {
         int sum = 0;
-        for (Die die : dies) {
+        for (Die die : dice) {
             if (die.getValue() == number) {
                 sum += die.getValue();
             }
@@ -28,10 +28,10 @@ public class ScoreBoard {
         return Integer.toString(0);
     }
 
-    private static String xOfAKind(int number, List<Die> dies) {
+    private static String xOfAKind(int number, List<Die> dice) {
         Map<Integer, Integer> counter = new HashMap<>();
 
-        for (Die die : dies) {
+        for (Die die : dice) {
             if (!counter.containsKey(die.getValue())) {
                 counter.put(die.getValue(), 1);
             } else {
@@ -55,21 +55,21 @@ public class ScoreBoard {
         return Integer.toString(0);
     }
 
-    private static String chance(List<Die> dies) {
+    private static String chance(List<Die> dice) {
         int scoreTotal = 0;
 
-        for (Die die : dies) {
+        for (Die die : dice) {
             scoreTotal += die.getValue();
         }
 
         return Integer.toString(scoreTotal);
     }
 
-    private static String fullHouse(List<Die> dies) {
+    private static String fullHouse(List<Die> dice) {
         Map<Integer, Integer> countMap = new HashMap<>();
         int sum = 0;
 
-        for (Die die : dies) {
+        for (Die die : dice) {
             countMap.put(die.getValue(), countMap.getOrDefault(die.getValue(), 0) + 1);
             sum += die.getValue();
         }
@@ -134,7 +134,7 @@ public class ScoreBoard {
             case 4:
             case 5:
             case 6:
-                result = ScoreBoard.sumSingleNumberDies(position, dice);
+                result = ScoreBoard.sumSingleNumberDice(position, dice);
                 break;
 
             case 7:
@@ -207,8 +207,8 @@ public class ScoreBoard {
         return result;
     }
 
-    // private boolean checkSize(List<Die> dies) {
-    // if (dies.size() != 5) {
+    // private boolean checkSize(List<Die> dice) {
+    // if (dice.size() != 5) {
     // return false;
     // }
     // return true;
