@@ -111,7 +111,7 @@ public class MainController {
     private Die dieNumber4 = new Die();
     private Die dieNumber5 = new Die();
 
-    private List<Die> dies = new ArrayList<>();
+    private List<Die> dice = new ArrayList<>();
     private List<Label> scoreLabels = new ArrayList<>();
 
     public MainController() {
@@ -123,11 +123,11 @@ public class MainController {
         getRandomDie(dieNumber4);
         getRandomDie(dieNumber5);
 
-        dies.add(dieNumber1);
-        dies.add(dieNumber2);
-        dies.add(dieNumber3);
-        dies.add(dieNumber4);
-        dies.add(dieNumber5);
+        dice.add(dieNumber1);
+        dice.add(dieNumber2);
+        dice.add(dieNumber3);
+        dice.add(dieNumber4);
+        dice.add(dieNumber5);
 
         for (int i = 0; i < 16; i++) {
             scoreLabels.add(new Label());
@@ -136,21 +136,40 @@ public class MainController {
 
     @FXML
     private void refreshClick(ActionEvent actionEvent) {
-        if (!player.isSaved()) {
-            for (Die die : dies) {
-                if (player.getTries() < 3) {
-                    if (!die.isSelected()) {
-                        getRandomDie(die);
-                    }
-                } else {
+        // if (!player.isSaved() && player.getTries() < 3) {
+        //     for (Die die : dice) {
+        //         // if (player.getTries() < 3) {
+        //             if (!die.isSelected()) {
+        //                 getRandomDie(die);
+        //             // }
+        //         } else {
+        //             getRandomDie(die);
+        //             score.setDisable(true);
+        //             clearDieEffects();
+        //             // rollButton.setDisable(true);
+        //             player.toggleSave();
+        //         }
+        //     }
+        // }
+
+        // System.out.println(actionEvent.toString());
+
+        if (!player.isSaved() && player.getTries() < 3) {
+            for (Die die : dice) {
+                if (!die.isSelected()) {
                     getRandomDie(die);
-                    score.setDisable(true);
-                    clearDieEffects();
-                    rollButton.setDisable(true);
                 }
+                // rollButton.setDisable(false);
             }
             player.setTries(1);
         }
+
+        if (!player.isSaved() && player.getTries() == 3) {
+            rollButton.setDisable(true);
+        }
+
+        // if (player.isSaved())
+
 
         numberOfTries.setText("Number of tries: " + player.getTries());
 
@@ -160,36 +179,92 @@ public class MainController {
         die4.setImage(dieNumber4.getImage());
         die5.setImage(dieNumber5.getImage());
 
-        playerName.setText(player.getName());
-
         score.setText(Integer.toString(player.getScore()));
+        
+        playerName.setText(player.getName());
         updateScores();
     }
 
     private void updateScores() {
-        aces.setText(ScoreBoard.sumSingleNumberDies(1, dies));
-        twos.setText(ScoreBoard.sumSingleNumberDies(2, dies));
-        threes.setText(ScoreBoard.sumSingleNumberDies(3, dies));
-        fours.setText(ScoreBoard.sumSingleNumberDies(4, dies));
-        fives.setText(ScoreBoard.sumSingleNumberDies(5, dies));
-        sixes.setText(ScoreBoard.sumSingleNumberDies(6, dies));
+        // if (player.getScoreMap().containsKey(1)) {
+        //     aces.setText(Integer.toString(player.getScoreMap().get(1)));
+        //     System.out.println("Aces already saved. Displaying saved state instead");
+        // } else {
+        //     aces.setText(ScoreBoard.sumSingleNumberDies(1, dice));
+        // }
 
-        total.setText(ScoreBoard.calculateTotal(aces, twos, threes, fours, fives, sixes));
-        bonus.setText(ScoreBoard.bonus(total.getText()));
+        // if (player.getScoreMap().containsKey(2)) {
+        //     twos.setText(Integer.toString(player.getScoreMap().get(2)));
+        //     System.out.println("Twos already saved. Displaying saved state instead");
+        // } else {
+        //     twos.setText(ScoreBoard.sumSingleNumberDies(2, dice));
+        // }
+        // threes.setText(ScoreBoard.sumSingleNumberDies(3, dice));
+        // fours.setText(ScoreBoard.sumSingleNumberDies(4, dice));
+        // fives.setText(ScoreBoard.sumSingleNumberDies(5, dice));
+        // sixes.setText(ScoreBoard.sumSingleNumberDies(6, dice));
+        // aces.setText(player.getScoreFromScoreMap(1, dice));
+        // twos.setText(player.getScoreFromScoreMap(2, dice));
+        // threes.setText(player.getScoreFromScoreMap(3, dice));
+        // fours.setText(player.getScoreFromScoreMap(4, dice));
+        // fives.setText(player.getScoreFromScoreMap(5, dice));
+        // sixes.setText(player.getScoreFromScoreMap(6, dice));
 
-        threeOfAKind.setText(ScoreBoard.xOfAKind(3, dies));
-        fourOfAKind.setText(ScoreBoard.xOfAKind(4, dies));
+        // total.setText(player.getScoreFromScoreMap(7, dice));
+        // bonus.setText(player.getScoreFromScoreMap(8, dice));
 
-        fullHouse.setText(ScoreBoard.fullHouse(dies));
+        // threeOfAKind.setText(player.getScoreFromScoreMap(9, dice));
+        // fourOfAKind.setText(player.getScoreFromScoreMap(10, dice));
 
-        small.setText(ScoreBoard.smallStraight(dies));
-        large.setText(ScoreBoard.largeStraight(dies));
+        // fullHouse.setText(player.getScoreFromScoreMap(11, dice));
 
-        chance.setText(ScoreBoard.chance(dies));
-        yahtzee.setText(ScoreBoard.xOfAKind(5, dies));
+        // small.setText(player.getScoreFromScoreMap(12, dice));
+        // large.setText(player.getScoreFromScoreMap(13, dice));
 
-        grand.setText(ScoreBoard.grand(aces, twos, threes, fours, fives, sixes, total, bonus, threeOfAKind, fourOfAKind,
-                fullHouse, small, large, chance, yahtzee));
+        // chance.setText(player.getScoreFromScoreMap(14, dice));
+        // yahtzee.setText(player.getScoreFromScoreMap(15, dice));
+
+        // grand.setText(player.getScoreFromScoreMap(16, dice));
+
+        aces.setText(ScoreBoard.updateScores(player.getScoreMap(), 1, dice));
+        twos.setText(ScoreBoard.updateScores(player.getScoreMap(), 2, dice));
+        threes.setText(ScoreBoard.updateScores(player.getScoreMap(), 3, dice));
+        fours.setText(ScoreBoard.updateScores(player.getScoreMap(), 4, dice));
+        fives.setText(ScoreBoard.updateScores(player.getScoreMap(), 5, dice));
+        sixes.setText(ScoreBoard.updateScores(player.getScoreMap(), 6, dice));
+
+        total.setText(ScoreBoard.updateScores(player.getScoreMap(), 7, dice));
+        bonus.setText(ScoreBoard.updateScores(player.getScoreMap(), 8, dice));
+
+        threeOfAKind.setText(ScoreBoard.updateScores(player.getScoreMap(), 9, dice));
+        fourOfAKind.setText(ScoreBoard.updateScores(player.getScoreMap(), 10, dice));
+
+        fullHouse.setText(ScoreBoard.updateScores(player.getScoreMap(), 11, dice));
+
+        small.setText(ScoreBoard.updateScores(player.getScoreMap(), 12, dice));
+        large.setText(ScoreBoard.updateScores(player.getScoreMap(), 13, dice));
+
+        chance.setText(ScoreBoard.updateScores(player.getScoreMap(), 14, dice));
+        yahtzee.setText(ScoreBoard.updateScores(player.getScoreMap(), 15, dice));
+
+        grand.setText(ScoreBoard.updateScores(player.getScoreMap(), 16, dice));
+
+        // total.setText(ScoreBoard.calculateTotal(aces, twos, threes, fours, fives, sixes));
+        // bonus.setText(ScoreBoard.bonus(total.getText()));
+
+        // threeOfAKind.setText(ScoreBoard.xOfAKind(3, dice));
+        // fourOfAKind.setText(ScoreBoard.xOfAKind(4, dice));
+
+        // fullHouse.setText(ScoreBoard.fullHouse(dice));
+
+        // small.setText(ScoreBoard.smallStraight(dice));
+        // large.setText(ScoreBoard.largeStraight(dice));
+
+        // chance.setText(ScoreBoard.chance(dice));
+        // yahtzee.setText(ScoreBoard.xOfAKind(5, dice));
+
+        // grand.setText(ScoreBoard.grand(aces, twos, threes, fours, fives, sixes, total, bonus, threeOfAKind, fourOfAKind,
+        //         fullHouse, small, large, chance, yahtzee));
     }
 
     private void getRandomDie(Die die) {
@@ -206,7 +281,7 @@ public class MainController {
             ImageView image = (ImageView) source;
             int position = getPosition(image);
 
-            Die shadowDie = dies.get(position);
+            Die shadowDie = dice.get(position);
 
             if (shadowDie.isSelected()) {
                 image.setEffect(null);
@@ -226,17 +301,21 @@ public class MainController {
         if (source instanceof Label) {
             Label label = (Label) source;
 
-            int position = getLabelPosition(label) - 1;
+            int position = getLabelPosition(label);
 
             Label score = scoreLabels.get(position);
 
-            if (!player.isSaved()) {
+            if (!player.alreadySaved(position)) {
                 System.out.println(label.getText());
-                player.save(Integer.parseInt(label.getText()));
+                player.save(position, Integer.parseInt(label.getText()));
                 // label.setEffect(null);
                 label.setTextFill(Color.HOTPINK);
                 System.out.println(label.getText());
                 System.out.println(label.getId());
+                rollButton.setDisable(false);
+                clearDieEffects();
+                player.toggleSave();
+                player.setTries(3);
             } else {
                 // label.setEffect(new ColorAdjust(0, 0.4, 0, 0));
                 // image.setEffect(new DropShadow());
@@ -247,7 +326,7 @@ public class MainController {
     }
 
     private void clearDieEffects() {
-        for (Die die : dies) {
+        for (Die die : dice) {
             die.setSelected(false);
         }
 

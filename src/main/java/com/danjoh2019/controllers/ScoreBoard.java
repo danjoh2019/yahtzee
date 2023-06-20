@@ -37,8 +37,8 @@ public class ScoreBoard {
         return Integer.toString(sum);
     }
 
-    public static String bonus(String total) {
-        if (Integer.parseInt(total) >= 63) {
+    public static String bonus(int total) {
+        if (total >= 63) {
             return Integer.toString(50);
         }
         return Integer.toString(0);
@@ -166,6 +166,93 @@ public class ScoreBoard {
         }
 
         return Integer.toString(0);
+    }
+
+    public static String updateScores(Map<Integer, Integer> scores, int position, List<Die> dice) {
+        String result = Integer.toString(0);
+
+        if (scores.containsKey(position)) {
+            return Integer.toString(scores.get(position));
+        }
+
+        switch (position) {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+                result = ScoreBoard.sumSingleNumberDies(position, dice);
+                break;
+
+            case 7:
+                int sumOneToSix = 0;
+
+                for (int i = 1; i <= 6; i++) {
+                    if (scores.get(i) != null) {
+                        sumOneToSix += scores.get(i);
+                    }
+                    sumOneToSix += 0;
+                }
+
+                result = Integer.toString(sumOneToSix);
+                break;
+
+            case 8:
+                int sumBonus = 0;
+                
+                for (int i = 1; i <= 6; i++) {
+                    if (scores.get(i) != null) {
+                        sumBonus += scores.get(i);
+                    }
+                    sumBonus += 0;
+                }
+
+                result = ScoreBoard.bonus(sumBonus);
+                break;
+
+            case 9:
+                result = ScoreBoard.xOfAKind(3, dice);
+                break;
+
+            case 10:
+                result = ScoreBoard.xOfAKind(4, dice);
+                break;
+
+            case 11:
+                result = ScoreBoard.fullHouse(dice);
+                break;
+
+            case 12:
+                result = ScoreBoard.smallStraight(dice);
+                break;
+
+            case 13:
+                result = ScoreBoard.largeStraight(dice);
+                break;
+
+            case 14:
+                result = ScoreBoard.chance(dice);
+                break;
+
+            case 15:
+                result = ScoreBoard.xOfAKind(5, dice);
+                break;
+
+            case 16:
+                int sum = 0;
+
+                if (!scores.isEmpty()) {
+                    for (int val : scores.values()) {
+                        sum += val;
+                    }
+                }
+
+                result = Integer.toString(sum);
+                break;
+        }
+
+        return result;
     }
 
     // private boolean checkSize(List<Die> dies) {
