@@ -113,7 +113,7 @@ public class MainController {
     private List<Label> scoreLabels = new ArrayList<>();
 
     public MainController() {
-        player = new Player();
+        player = new Player("Player 1");
 
         getRandomDie(dieNumber1);
         getRandomDie(dieNumber2);
@@ -225,15 +225,11 @@ public class MainController {
 
             int position = getLabelPosition(label);
 
-            Label score = scoreLabels.get(position);
+            // Label score = scoreLabels.get(position);
 
             if (!player.alreadySaved(position)) {
-                System.out.println(label.getText());
                 player.save(position, Integer.parseInt(label.getText()));
-                // label.setEffect(null);
                 label.setTextFill(Color.HOTPINK);
-                System.out.println(label.getText());
-                System.out.println(label.getId());
                 rollButton.setDisable(false);
                 clearDieEffects();
                 player.toggleSave();

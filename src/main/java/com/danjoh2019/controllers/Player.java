@@ -15,8 +15,8 @@ public class Player {
     List<Integer> scorePosition;
     Map<Integer, Integer> scores;
 
-    public Player() {
-        this.name = "player";
+    public Player(String name) {
+        this.name = name;
         this.scorePosition = new ArrayList<>();
         this.scores = new HashMap<>();
         this.score = 0;
