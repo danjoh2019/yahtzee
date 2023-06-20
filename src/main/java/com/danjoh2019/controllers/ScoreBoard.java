@@ -1,6 +1,5 @@
 package com.danjoh2019.controllers;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,11 +9,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import javafx.scene.control.Label;
-
 public class ScoreBoard {
 
-    public static String sumSingleNumberDies(int number, List<Die> dies) {
+    private static String sumSingleNumberDies(int number, List<Die> dies) {
         int sum = 0;
         for (Die die : dies) {
             if (die.getValue() == number) {
@@ -24,27 +21,14 @@ public class ScoreBoard {
         return Integer.toString(sum);
     }
 
-    public static String calculateTotal(Label ones, Label twos, Label threes, Label fours, Label fives, Label sixes) {
-        int sum = 0;
-
-        sum += Integer.valueOf(ones.getText());
-        sum += Integer.valueOf(twos.getText());
-        sum += Integer.valueOf(threes.getText());
-        sum += Integer.valueOf(fours.getText());
-        sum += Integer.valueOf(fives.getText());
-        sum += Integer.valueOf(sixes.getText());
-
-        return Integer.toString(sum);
-    }
-
-    public static String bonus(int total) {
+    private static String bonus(int total) {
         if (total >= 63) {
             return Integer.toString(50);
         }
         return Integer.toString(0);
     }
 
-    public static String xOfAKind(int number, List<Die> dies) {
+    private static String xOfAKind(int number, List<Die> dies) {
         Map<Integer, Integer> counter = new HashMap<>();
 
         for (Die die : dies) {
@@ -71,7 +55,7 @@ public class ScoreBoard {
         return Integer.toString(0);
     }
 
-    public static String chance(List<Die> dies) {
+    private static String chance(List<Die> dies) {
         int scoreTotal = 0;
 
         for (Die die : dies) {
@@ -81,40 +65,7 @@ public class ScoreBoard {
         return Integer.toString(scoreTotal);
     }
 
-    public static String grand(Label aces, Label twos, Label threes, Label fours, Label fives, Label sixes, Label total,
-            Label bonus, Label threeOfAKind, Label fourOfAKind, Label fullHouse, Label small, Label large,
-            Label chance, Label yahtzee) {
-
-        int sum = 0;
-
-        List<Label> labels = new ArrayList<>();
-
-        labels.add(aces);
-        labels.add(twos);
-        labels.add(threes);
-        labels.add(fours);
-        labels.add(fives);
-        labels.add(sixes);
-        labels.add(total);
-        labels.add(bonus);
-        labels.add(threeOfAKind);
-        labels.add(fourOfAKind);
-        labels.add(fullHouse);
-        labels.add(small);
-        labels.add(large);
-        labels.add(chance);
-        labels.add(yahtzee);
-
-        for (Label label : labels) {
-            if (!label.getText().isEmpty()) {
-                sum += Integer.parseInt(label.getText());
-            }
-        }
-
-        return Integer.toString(sum);
-    }
-
-    public static String fullHouse(List<Die> dies) {
+    private static String fullHouse(List<Die> dies) {
         Map<Integer, Integer> countMap = new HashMap<>();
         int sum = 0;
 
@@ -140,7 +91,8 @@ public class ScoreBoard {
 
         return Integer.toString(0);
     }
-    public static String smallStraight(List<Die> dice) {
+
+    private static String smallStraight(List<Die> dice) {
         Set<Integer> uniqueDice = new HashSet<>();
 
         for (Die die : dice) {
@@ -154,7 +106,7 @@ public class ScoreBoard {
         return Integer.toString(0);
     }
 
-    public static String largeStraight(List<Die> dice) {
+    private static String largeStraight(List<Die> dice) {
         Set<Integer> uniqueDice = new HashSet<>();
 
         for (Die die : dice) {
@@ -200,7 +152,7 @@ public class ScoreBoard {
 
             case 8:
                 int sumBonus = 0;
-                
+
                 for (int i = 1; i <= 6; i++) {
                     if (scores.get(i) != null) {
                         sumBonus += scores.get(i);
@@ -212,31 +164,31 @@ public class ScoreBoard {
                 break;
 
             case 9:
-                result = ScoreBoard.xOfAKind(3, dice);
+                result = xOfAKind(3, dice);
                 break;
 
             case 10:
-                result = ScoreBoard.xOfAKind(4, dice);
+                result = xOfAKind(4, dice);
                 break;
 
             case 11:
-                result = ScoreBoard.fullHouse(dice);
+                result = fullHouse(dice);
                 break;
 
             case 12:
-                result = ScoreBoard.smallStraight(dice);
+                result = smallStraight(dice);
                 break;
 
             case 13:
-                result = ScoreBoard.largeStraight(dice);
+                result = largeStraight(dice);
                 break;
 
             case 14:
-                result = ScoreBoard.chance(dice);
+                result = chance(dice);
                 break;
 
             case 15:
-                result = ScoreBoard.xOfAKind(5, dice);
+                result = xOfAKind(5, dice);
                 break;
 
             case 16:
