@@ -13,12 +13,12 @@ public class Player {
     private int tries;
 
     List<Integer> scorePosition;
-    Map<Integer, Integer> scores;
+    Map<Integer, Integer> scoreMap;
 
     public Player(String name) {
         this.name = name;
         this.scorePosition = new ArrayList<>();
-        this.scores = new HashMap<>();
+        this.scoreMap = new HashMap<>();
         this.score = 0;
         this.tries = 0;
     }
@@ -45,7 +45,7 @@ public class Player {
 
     public void save(int position, int score) {
         scorePosition.add(position);
-        this.scores.put(position, score);
+        this.scoreMap.put(position, score);
         this.score += score;
         this.save = true;
     }
@@ -66,7 +66,19 @@ public class Player {
         return score;
     }
 
+    public boolean checkIfPlayerWon() {
+        int arr[] = { 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15 };
+        
+        for (int num : arr) {
+            if (!scoreMap.containsKey(num)) {
+                System.out.println("not finished yet: " + score);
+                return false;
+            }
+        }
+        return true;
+    }
+
     public Map<Integer, Integer> getScoreMap() {
-        return scores;
+        return scoreMap;
     }
 }
