@@ -1,11 +1,19 @@
 package com.danjoh2019.controllers;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.danjoh2019.App;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
@@ -15,6 +23,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 public class MainController {
     private Player player;
@@ -48,6 +57,9 @@ public class MainController {
 
     @FXML
     private Button rollButton;
+
+    @FXML
+    private Button finishedButton;
 
     @FXML
     private Label playerName;
@@ -130,6 +142,8 @@ public class MainController {
         for (int i = 0; i < 16; i++) {
             scoreLabels.add(new Label());
         }
+
+        // finishedButton.setVisible(false);
     }
 
     @FXML
@@ -162,6 +176,23 @@ public class MainController {
 
         playerName.setText(player.getName());
         updateScores();
+    }
+
+    @FXML
+    private void showScores(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("secondary.fxml"));
+            Parent root = fxmlLoader.load();
+            var scene = new Scene(root, 640, 480);
+            Node node = (Node) actionEvent.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            throw new UncheckedIOException(ex);
+        }
+        // rollButton.setVisible(false);
+        // finishedButton.setVisible(true);
     }
 
     private void updateScores() {
@@ -234,6 +265,14 @@ public class MainController {
                 clearDieEffects();
                 player.toggleSave();
                 player.setTries(3);
+
+                if (player.checkIfPlayerWon()) {
+                    System.out.println(player.getScore());
+                    player.save(8, Integer.parseInt(ScoreBoard.updateScores(player.getScoreMap(), 8, dice)));
+                    rollButton.setVisible(false);
+                    finishedButton.setVisible(true);
+                    System.out.println(player.getScore());
+                }
             } else {
                 // label.setEffect(new ColorAdjust(0, 0.4, 0, 0));
                 // image.setEffect(new DropShadow());

@@ -68,6 +68,11 @@
                      <font>
                         <Font size="15.0" />
                      </font></Label>
+                  <Button fx:id="finishedButton" mnemonicParsing="false" onAction="#showScores" style="-fx-background-color: hotpink;" text="FINISHED" textAlignment="CENTER" visible="false">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
                </children>
                <padding>
                   <Insets left="20.0" right="20.0" />
