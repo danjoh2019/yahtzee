@@ -193,12 +193,22 @@ public class ScoreBoard {
 
             case 16:
                 int sum = 0;
+                int addBonus = 0;
 
                 if (!scores.isEmpty()) {
                     for (int val : scores.values()) {
                         sum += val;
                     }
                 }
+
+                for (int i = 1; i <= 6; i++) {
+                    if (scores.get(i) != null) {
+                        addBonus += scores.get(i);
+                    }
+                    addBonus += 0;
+                }
+
+                sum += Integer.parseInt(ScoreBoard.bonus(addBonus));
 
                 result = Integer.toString(sum);
                 break;
