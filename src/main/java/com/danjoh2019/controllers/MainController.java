@@ -115,6 +115,8 @@ public class MainController {
     @FXML
     private Label grand;
 
+    private Highscore highscore;
+
     private Die dieNumber1 = new Die();
     private Die dieNumber2 = new Die();
     private Die dieNumber3 = new Die();
@@ -142,6 +144,8 @@ public class MainController {
         for (int i = 0; i < 16; i++) {
             scoreLabels.add(new Label());
         }
+
+        highscore = new Highscore();
 
         // finishedButton.setVisible(false);
     }
@@ -271,6 +275,9 @@ public class MainController {
                     player.save(8, Integer.parseInt(ScoreBoard.updateScores(player.getScoreMap(), 8, dice)));
                     rollButton.setVisible(false);
                     finishedButton.setVisible(true);
+                    if (highscore.checkIfNewHighscore(player)) {
+                        highscore.saveHighscore(player);
+                    }
                     System.out.println(player.getScore());
                 }
             } else {

@@ -2,6 +2,7 @@ package com.danjoh2019.controllers;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.util.List;
 
 import com.danjoh2019.App;
 
@@ -12,16 +13,25 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class SecondaryController {
     @FXML
     private Button newGameButton;
 
-    // @FXML
-    // public void initialize() {
+    @FXML
+    private Label highscoreLabel;
 
-    // }
+    private Highscore highscore;
+    private String highscores;
+
+    @FXML
+    public void initialize() {
+        highscore = new Highscore();
+        highscores = formatHighscore(highscore.getHighscore());
+        highscoreLabel.setText(highscores);
+    }
 
     @FXML
     private void newGame(ActionEvent actionEvent) {
@@ -36,5 +46,18 @@ public class SecondaryController {
         } catch (IOException ex) {
             throw new UncheckedIOException(ex);
         }
+    }
+
+    private static String formatHighscore(List<Player> highscore) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("HIGHSCORES:").append("\n");
+
+        for (Player p : highscore) {
+            sb.append(p.getScore()).append(": ").append(p.getName());
+            sb.append("\n");
+        }
+
+        return sb.toString();
     }
 }
