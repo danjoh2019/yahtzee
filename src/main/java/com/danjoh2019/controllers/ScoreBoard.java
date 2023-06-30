@@ -1,6 +1,8 @@
 package com.danjoh2019.controllers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -53,6 +55,54 @@ public class ScoreBoard {
             }
         }
         return Integer.toString(0);
+    }
+
+    private static String onePair(List<Die> dice) {
+        Map<Integer, Integer> faceValueCounts = getFaceValueCount(dice);
+
+        int highestPairValue = 0;
+        for (Map.Entry<Integer, Integer> entry : faceValueCounts.entrySet()) {
+            int count = entry.getValue();
+            if (count >= 2) {
+                int faceValue = entry.getKey();
+                highestPairValue = Math.max(highestPairValue, faceValue * 2);
+            }
+        }
+
+        return Integer.toString(highestPairValue);
+    }
+
+    private static String twoPairs(List<Die> dice) {
+        Map<Integer, Integer> faceValueCounts = getFaceValueCount(dice);
+
+        List<Integer> pairs = new ArrayList<>();
+        for (Map.Entry<Integer, Integer> entry : faceValueCounts.entrySet()) {
+            int count = entry.getValue();
+            if (count >= 2) {
+                int faceValue = entry.getKey();
+                pairs.add(faceValue);
+            }
+        }
+
+        Collections.sort(pairs, Collections.reverseOrder());
+
+        if (pairs.size() >= 2) {
+            return Integer.toString(pairs.get(0) * 2 + pairs.get(1) * 2);
+        } else {
+            return Integer.toString(0);
+        }
+    }
+
+    private static Map<Integer, Integer> getFaceValueCount(List<Die> dice) {
+        Map<Integer, Integer> faceValueCount = new HashMap<>();
+
+        for (Die die : dice) {
+            int faceValue = die.getValue();
+            int count = faceValueCount.getOrDefault(faceValue, 0);
+            faceValueCount.put(faceValue, count + 1);
+        }
+
+        return faceValueCount;
     }
 
     private static String chance(List<Die> dice) {
@@ -211,6 +261,13 @@ public class ScoreBoard {
                 sum += Integer.parseInt(ScoreBoard.bonus(addBonus));
 
                 result = Integer.toString(sum);
+                break;
+
+            case 17:
+                result = onePair(dice);
+                break;
+            case 18:
+                result = twoPairs(dice);
                 break;
         }
 

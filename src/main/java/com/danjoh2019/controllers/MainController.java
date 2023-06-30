@@ -89,6 +89,12 @@ public class MainController {
     private Label bonus;
 
     @FXML
+    private Label onePair;
+
+    @FXML
+    private Label twoPairs;
+
+    @FXML
     private Label threeOfAKind;
 
     @FXML
@@ -222,6 +228,9 @@ public class MainController {
         yahtzee.setText(ScoreBoard.updateScores(player.getScoreMap(), 15, dice));
 
         grand.setText(ScoreBoard.updateScores(player.getScoreMap(), 16, dice));
+
+        onePair.setText(ScoreBoard.updateScores(player.getScoreMap(), 17, dice));
+        twoPairs.setText(ScoreBoard.updateScores(player.getScoreMap(), 18, dice));
     }
 
     private void getRandomDie(Die die) {
@@ -318,7 +327,6 @@ public class MainController {
 
     /**
      * Get the position within the GridPane for the given Label.
-     * First score label will be 1, last will be 16.
      */
     private int getLabelPosition(Label label) {
         int count = 0;
@@ -331,7 +339,7 @@ public class MainController {
                 count++;
             }
         }
-
+        
         return count;
     }
 }

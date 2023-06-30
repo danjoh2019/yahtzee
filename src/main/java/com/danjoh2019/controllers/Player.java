@@ -72,7 +72,7 @@ public class Player implements Comparable<Player> {
     }
 
     public boolean checkIfPlayerWon() {
-        int arr[] = { 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15 };
+        int arr[] = { 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 17, 18 };
         
         for (int num : arr) {
             if (!scoreMap.containsKey(num)) {
