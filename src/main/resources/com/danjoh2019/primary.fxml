@@ -16,7 +16,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.danjoh2019.controllers.MainController">
    <children>
       <Accordion layoutX="212.0" layoutY="203.0" />
-      <VBox layoutX="146.0" layoutY="79.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutX="146.0" layoutY="79.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #dae7f2, #aabdcd)linear-gradient(from 25% 25% to 100% 100%, #dae7f2, #aabdcd)" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox fx:id="hBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
@@ -47,7 +47,7 @@
                   </ImageView>
                </children>
                <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets bottom="10.0" left="90.0" right="90.0" top="10.0" />
                </VBox.margin>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -59,15 +59,15 @@
                      <font>
                         <Font size="15.0" />
                      </font></Button>
-                  <Label fx:id="score">
-                     <font>
-                        <Font size="36.0" />
-                     </font>
-                  </Label>
                   <Label fx:id="numberOfTries">
                      <font>
                         <Font size="15.0" />
                      </font></Label>
+                  <Label fx:id="score" maxHeight="-Infinity" maxWidth="-Infinity" text="     ">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
                   <Button fx:id="finishedButton" mnemonicParsing="false" onAction="#showScores" style="-fx-background-color: hotpink;" text="FINISHED" textAlignment="CENTER" visible="false">
                      <font>
                         <Font size="15.0" />
@@ -81,7 +81,7 @@
                   <Insets />
                </VBox.margin>
             </HBox>
-            <GridPane fx:id="gridPane">
+            <GridPane fx:id="gridPane" style="-fx-border-color: grey;">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -101,7 +101,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="labelTitle" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #e4e4e4;" text="PLAYER" textFill="#365068">
+                  <Label fx:id="labelTitle" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PLAYER" textFill="#365068">
                      <padding>
                         <Insets left="3.0" />
                      </padding>
@@ -157,7 +157,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelTitle" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #e4e4e4;" text="TOTAL SCORE" textFill="#365068" GridPane.rowIndex="7">
+                  <Label fx:id="labelTitle" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="TOTAL SCORE" textFill="#365068" GridPane.rowIndex="7">
                      <padding>
                         <Insets left="3.0" />
                      </padding>
@@ -165,7 +165,7 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelTitle" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #e4e4e4;" text="BONUS" textFill="#365068" GridPane.rowIndex="8">
+                  <Label fx:id="labelTitle" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="BONUS" textFill="#365068" GridPane.rowIndex="8">
                      <padding>
                         <Insets left="3.0" />
                      </padding>
@@ -173,10 +173,13 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="playerName" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #e4e4e4;" textFill="#365068" GridPane.columnIndex="1">
+                  <Label fx:id="playerName" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #e4e4e4; -fx-background-radius: 20px;" textFill="#365068" GridPane.columnIndex="1">
                      <font>
                         <Font name="System Bold" size="15.0" />
-                     </font></Label>
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="0.5" left="5.0" right="5.0" top="0.5" />
+                     </GridPane.margin></Label>
                   <Label fx:id="aces" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#scoreClicked" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="15.0" />
@@ -201,14 +204,20 @@
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Label>
-                  <Label fx:id="total" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #e4e4e4;" textFill="#365068" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                  <Label fx:id="total" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #e4e4e4; -fx-background-radius: 20px;" textFill="#365068" GridPane.columnIndex="1" GridPane.rowIndex="7">
                      <font>
                         <Font name="System Bold" size="15.0" />
-                     </font></Label>
-                  <Label fx:id="bonus" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #e4e4e4;" textFill="#365068" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="0.5" left="20.0" right="20.0" top="0.5" />
+                     </GridPane.margin></Label>
+                  <Label fx:id="bonus" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #e4e4e4; -fx-background-radius: 20px;" textFill="#365068" GridPane.columnIndex="1" GridPane.rowIndex="8">
                      <font>
                         <Font name="System Bold" size="15.0" />
-                     </font></Label>
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="0.5" left="20.0" right="20.0" top="0.5" />
+                     </GridPane.margin></Label>
                   <Label fx:id="labelTitle" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="3 OF A KIND" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="3.0" />
@@ -265,7 +274,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelTitle" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #e4e4e4;" text="GRAND TOTAL" textFill="#365068" GridPane.columnIndex="2" GridPane.rowIndex="9">
+                  <Label fx:id="labelTitle" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="GRAND TOTAL" textFill="#365068" GridPane.columnIndex="2" GridPane.rowIndex="9">
                      <GridPane.margin>
                         <Insets left="3.0" />
                      </GridPane.margin>
@@ -301,10 +310,13 @@
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Label>
-                  <Label fx:id="grand" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #e4e4e4;" textFill="#365068" GridPane.columnIndex="3" GridPane.rowIndex="9">
+                  <Label fx:id="grand" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #e4e4e4; -fx-background-radius: 20px;" textFill="#365068" GridPane.columnIndex="3" GridPane.rowIndex="9">
                      <font>
                         <Font name="System Bold" size="15.0" />
-                     </font></Label>
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="0.5" left="20.0" right="20.0" top="0.5" />
+                     </GridPane.margin></Label>
                   <Label fx:id="labelTitle" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="ONE PAIR" GridPane.columnIndex="2">
                      <font>
                         <Font size="15.0" />
