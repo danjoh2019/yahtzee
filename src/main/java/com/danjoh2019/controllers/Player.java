@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Player {
+public class Player implements Comparable<Player> {
     private String name;
     private int score;
 
@@ -21,6 +21,11 @@ public class Player {
         this.scoreMap = new HashMap<>();
         this.score = 0;
         this.tries = 0;
+    }
+
+    public Player(int score, String name) {
+        this.name = name;
+        this.score = score;
     }
 
     public int getTries() {
@@ -80,5 +85,15 @@ public class Player {
 
     public Map<Integer, Integer> getScoreMap() {
         return scoreMap;
+    }
+
+    @Override
+    public int compareTo(Player o) {
+        return Integer.compare(score, o.score);
+    }
+
+    @Override
+    public String toString() {
+        return score + ": " + name;
     }
 }
