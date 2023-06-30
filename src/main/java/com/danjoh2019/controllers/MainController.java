@@ -327,7 +327,6 @@ public class MainController {
 
     /**
      * Get the position within the GridPane for the given Label.
-     * First score label will be 1, last will be 16.
      */
     private int getLabelPosition(Label label) {
         int count = 0;
@@ -340,7 +339,7 @@ public class MainController {
                 count++;
             }
         }
-
+        
         return count;
     }
 }

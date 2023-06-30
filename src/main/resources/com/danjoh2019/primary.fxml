@@ -305,21 +305,21 @@
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="ONE PAIR" GridPane.columnIndex="2">
+                  <Label fx:id="labelTitle" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="ONE PAIR" GridPane.columnIndex="2">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="TWO PAIRS" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Label fx:id="labelTitle" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="TWO PAIRS" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="onePair" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3">
+                  <Label fx:id="onePair" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#scoreClicked" GridPane.columnIndex="3">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Label>
-                  <Label fx:id="twoPairs" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                  <Label fx:id="twoPairs" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#scoreClicked" GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Label>
