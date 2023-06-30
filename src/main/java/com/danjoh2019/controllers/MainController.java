@@ -89,6 +89,12 @@ public class MainController {
     private Label bonus;
 
     @FXML
+    private Label onePair;
+
+    @FXML
+    private Label twoPairs;
+
+    @FXML
     private Label threeOfAKind;
 
     @FXML
@@ -223,8 +229,8 @@ public class MainController {
 
         grand.setText(ScoreBoard.updateScores(player.getScoreMap(), 16, dice));
 
-        System.out.println("Pair: " + ScoreBoard.updateScores(player.getScoreMap(), 17, dice));
-        System.out.println("Two pairs: " + ScoreBoard.updateScores(player.getScoreMap(), 18, dice));
+        onePair.setText(ScoreBoard.updateScores(player.getScoreMap(), 17, dice));
+        twoPairs.setText(ScoreBoard.updateScores(player.getScoreMap(), 18, dice));
     }
 
     private void getRandomDie(Die die) {

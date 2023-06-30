@@ -65,7 +65,7 @@ public class ScoreBoard {
             int count = entry.getValue();
             if (count >= 2) {
                 int faceValue = entry.getKey();
-                highestPairValue = Math.max(highestPairValue * 2, faceValue * 2);
+                highestPairValue = Math.max(highestPairValue, faceValue * 2);
             }
         }
 
