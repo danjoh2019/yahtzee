@@ -222,6 +222,9 @@ public class MainController {
         yahtzee.setText(ScoreBoard.updateScores(player.getScoreMap(), 15, dice));
 
         grand.setText(ScoreBoard.updateScores(player.getScoreMap(), 16, dice));
+
+        System.out.println("Pair: " + ScoreBoard.updateScores(player.getScoreMap(), 17, dice));
+        System.out.println("Two pairs: " + ScoreBoard.updateScores(player.getScoreMap(), 18, dice));
     }
 
     private void getRandomDie(Die die) {
