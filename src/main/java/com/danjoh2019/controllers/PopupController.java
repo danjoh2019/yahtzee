@@ -24,8 +24,6 @@ public class PopupController {
 
         highscore.saveHighscore(player);
 
-        System.out.println("Name field: " + nameField.getText());
-        System.out.println("Player name: " + player.getName());
         stage.close();
     }
 }
