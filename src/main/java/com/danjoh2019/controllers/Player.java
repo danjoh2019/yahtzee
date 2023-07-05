@@ -32,12 +32,12 @@ public class Player implements Comparable<Player> {
         return this.tries;
     }
 
-    public void setTries(int tries) {
-        if (this.tries < 3) {
-            this.tries += tries;
-        } else {
-            this.tries = 0;
-        }
+    public void resetTries() {
+        this.tries = 1;
+    }
+
+    public void setTries() {
+        this.tries += 1;
     }
 
     public String getName() {
