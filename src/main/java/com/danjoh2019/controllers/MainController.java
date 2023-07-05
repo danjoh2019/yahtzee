@@ -22,8 +22,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class MainController {
     private Player player;
@@ -142,7 +145,7 @@ public class MainController {
         dice.add(dieNumber5);
 
         reRollAllDice();
-        
+
         for (int i = 0; i < 16; i++) {
             scoreLabels.add(new Label());
         }
@@ -158,8 +161,7 @@ public class MainController {
         getRandomDie(dieNumber3);
         getRandomDie(dieNumber4);
         getRandomDie(dieNumber5);
-        
-        
+
     }
 
     private void setDiceImages() {
@@ -200,19 +202,47 @@ public class MainController {
 
     @FXML
     private void showScores(ActionEvent actionEvent) {
+
         try {
+            // Stage stage = new Stage();
+            // Parent root = FXMLLoader.load(App.class.getResource("popup.fxml"));
+
+            // stage.setScene(new Scene(root));
+            // stage.initModality(Modality.APPLICATION_MODAL);
+            // stage.initStyle(StageStyle.TRANSPARENT);
+            // stage.setUserData(player);
+            // stage.showAndWait();
+
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("secondary.fxml"));
-            Parent root = fxmlLoader.load();
-            var scene = new Scene(root, 640, 480);
+            Parent root2 = fxmlLoader.load();
+            var scene = new Scene(root2, 640, 480);
             Node node = (Node) actionEvent.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
+            Stage stage2 = (Stage) node.getScene().getWindow();
+            stage2.setScene(scene);
+            stage2.show();
         } catch (IOException ex) {
             throw new UncheckedIOException(ex);
         }
+
         // rollButton.setVisible(false);
         // finishedButton.setVisible(true);
+    }
+
+    private void newHighscore() {
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(App.class.getResource("popup.fxml"));
+
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setUserData(player);
+            stage.showAndWait();
+
+        
+        } catch (IOException ex) {
+            throw new UncheckedIOException(ex);
+        }
     }
 
     private void updateScores() {
@@ -294,12 +324,12 @@ public class MainController {
                 setDiceImages();
 
                 if (player.checkIfPlayerWon()) {
-                    System.out.println(player.getScore());
                     player.save(8, Integer.parseInt(ScoreBoard.updateScores(player.getScoreMap(), 8, dice)));
                     rollButton.setVisible(false);
                     finishedButton.setVisible(true);
                     if (highscore.checkIfNewHighscore(player)) {
-                        highscore.saveHighscore(player);
+                        // highscore.saveHighscore(player);
+                        newHighscore();
                     }
                     System.out.println(player.getScore());
                 }
@@ -353,7 +383,7 @@ public class MainController {
                 count++;
             }
         }
-        
+
         return count;
     }
 }
