@@ -135,18 +135,14 @@ public class MainController {
     public MainController() {
         player = new Player("Player 1");
 
-        getRandomDie(dieNumber1);
-        getRandomDie(dieNumber2);
-        getRandomDie(dieNumber3);
-        getRandomDie(dieNumber4);
-        getRandomDie(dieNumber5);
-
         dice.add(dieNumber1);
         dice.add(dieNumber2);
         dice.add(dieNumber3);
         dice.add(dieNumber4);
         dice.add(dieNumber5);
 
+        reRollAllDice();
+        
         for (int i = 0; i < 16; i++) {
             scoreLabels.add(new Label());
         }
@@ -154,6 +150,24 @@ public class MainController {
         highscore = new Highscore();
 
         // finishedButton.setVisible(false);
+    }
+
+    private void reRollAllDice() {
+        getRandomDie(dieNumber1);
+        getRandomDie(dieNumber2);
+        getRandomDie(dieNumber3);
+        getRandomDie(dieNumber4);
+        getRandomDie(dieNumber5);
+        
+        
+    }
+
+    private void setDiceImages() {
+        die1.setImage(dieNumber1.getImage());
+        die2.setImage(dieNumber2.getImage());
+        die3.setImage(dieNumber3.getImage());
+        die4.setImage(dieNumber4.getImage());
+        die5.setImage(dieNumber5.getImage());
     }
 
     @FXML
@@ -165,7 +179,7 @@ public class MainController {
                 }
                 // rollButton.setDisable(false);
             }
-            player.setTries(1);
+            player.setTries();
         }
 
         if (!player.isSaved() && player.getTries() == 3) {
@@ -176,11 +190,7 @@ public class MainController {
 
         numberOfTries.setText("Number of tries: " + player.getTries());
 
-        die1.setImage(dieNumber1.getImage());
-        die2.setImage(dieNumber2.getImage());
-        die3.setImage(dieNumber3.getImage());
-        die4.setImage(dieNumber4.getImage());
-        die5.setImage(dieNumber5.getImage());
+        setDiceImages();
 
         score.setText(Integer.toString(player.getScore()));
 
@@ -277,7 +287,11 @@ public class MainController {
                 rollButton.setDisable(false);
                 clearDieEffects();
                 player.toggleSave();
-                player.setTries(3);
+                player.resetTries();
+                System.out.println("Player tries: " + player.getTries());
+                reRollAllDice();
+                updateScores();
+                setDiceImages();
 
                 if (player.checkIfPlayerWon()) {
                     System.out.println(player.getScore());
