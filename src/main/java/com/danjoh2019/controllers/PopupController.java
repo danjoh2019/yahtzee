@@ -20,7 +20,15 @@ public class PopupController {
         Stage stage = (Stage) okButton.getScene().getWindow();
         Player player = (Player) stage.getUserData();
 
-        player.setName(nameField.getText());
+        StringBuilder name = new StringBuilder();
+
+        for (int i = 0; i < nameField.getText().length() && i < 10; i++) {
+            if (Character.isAlphabetic(nameField.getText().charAt(i))) {
+                name.append(nameField.getText().charAt(i));
+            }
+        }
+
+        player.setName(name.toString());
 
         highscore.saveHighscore(player);
 
