@@ -161,7 +161,6 @@ public class MainController {
         getRandomDie(dieNumber3);
         getRandomDie(dieNumber4);
         getRandomDie(dieNumber5);
-
     }
 
     private void setDiceImages() {
@@ -188,16 +187,14 @@ public class MainController {
             rollButton.setDisable(true);
         }
 
-        // if (player.isSaved())
-
         numberOfTries.setText("Number of tries: " + player.getTries());
 
         setDiceImages();
 
-        score.setText(Integer.toString(player.getScore()));
-
+        
         playerName.setText(player.getName());
         updateScores();
+        //score.setText(Integer.toString(player.getScore()));
     }
 
     @FXML
@@ -309,16 +306,22 @@ public class MainController {
 
             int position = getLabelPosition(label);
 
-            // Label score = scoreLabels.get(position);
-
             if (!player.alreadySaved(position)) {
+                // save score on specified label
                 player.save(position, Integer.parseInt(label.getText()));
+
+                // change text colour on label
                 label.setTextFill(Color.HOTPINK);
+
+                // enable the roll button after save
                 rollButton.setDisable(false);
+
+                // unselect all dice
                 clearDieEffects();
+
                 player.toggleSave();
                 player.resetTries();
-                System.out.println("Player tries: " + player.getTries());
+
                 reRollAllDice();
                 updateScores();
                 setDiceImages();
@@ -331,12 +334,8 @@ public class MainController {
                         // highscore.saveHighscore(player);
                         newHighscore();
                     }
-                    System.out.println(player.getScore());
                 }
             } else {
-                // label.setEffect(new ColorAdjust(0, 0.4, 0, 0));
-                // image.setEffect(new DropShadow());
-                // label.setTextFill(Color.WHITE);
                 System.out.println("already saved");
             }
         }

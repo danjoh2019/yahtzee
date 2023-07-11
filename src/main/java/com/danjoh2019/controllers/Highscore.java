@@ -5,9 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Highscore {
     private String highscoreList;
@@ -82,10 +80,8 @@ public class Highscore {
             StringBuilder highscores = new StringBuilder();
 
             for (int j = 0; j < 10; j++) {
-                outputFile.append(players.get(j).getScore()).append(",").append(players.get(j).getName())
-                        .append(",");
-                highscores.append(players.get(j).getScore()).append(",").append(players.get(j).getName())
-                        .append(",");
+                outputFile.append(players.get(j).getScore()).append(",").append(players.get(j).getName()).append(",");
+                highscores.append(players.get(j).getScore()).append(",").append(players.get(j).getName()).append(",");
             }
 
             newHighscoreList.add(highscores.toString());

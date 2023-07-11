@@ -76,7 +76,6 @@ public class Player implements Comparable<Player> {
         
         for (int num : arr) {
             if (!scoreMap.containsKey(num)) {
-                System.out.println("not finished yet: " + score);
                 return false;
             }
         }
